@@ -1,20 +1,19 @@
 {
+  "manifest_version": 2,
+  "name": "Video Controller",
+  "version": "1.0",
 
-"manifest_version": 2,
-"name": "Video Controller",
-"version": "1.0",
+  "description": "Controller for HTML 5 videos",
 
-"description": "Controller for HTML 5 videos",
+  "icons": {
+      "48": "icons/border-48.png"
+    },
 
-"icons": {
-    "48": "icons/border-48.png"
-  },
-
-"content_scripts": [
-  {
-    "matches": ["*://*.mozilla.org/*"],
-    "js": ["videocontroller.js"]
-  }
-]
+  "content_scripts": [
+    {
+      "matches": [ "http://*/*", "https://*/*", "file:///*" ],
+      "js": ["videocontroller.js"]
+    }
+  ]
 
 }

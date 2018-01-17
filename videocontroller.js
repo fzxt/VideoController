@@ -8,6 +8,7 @@ class VideoController {
     this._initControls = this._initControls.bind(this);
     this._setSpeed = this._setSpeed.bind(this);
     this._updateSpeed = this._updateSpeed.bind(this);
+    this._insertStyles = this._insertStyles.bind(this);
     this._rewind = this._rewind.bind(this);
     this._faster = this._faster.bind(this);
     this._slower = this._slower.bind(this);
@@ -42,16 +43,44 @@ class VideoController {
     this._updateSpeed(this.speed + 0.1);
   }
 
+  _insertStyles() {
+    const css = `
+      .vidcontroller {
+        position: absolute;
+        top: 0;
+        left: 0;
+        background: black;
+        color: white;
+        border-radius: 5px;
+        padding: 5px;
+        margin: 10px 10px 10px 15px;
+        cursor: default;
+        z-index: 9999999;
+        opacity: 0.3;
+      }
+
+      .vidcontroller-btn {
+        margin-left: 10px;
+      }`;
+
+    const style = this.document.createElement('style');
+    style.textContent = css;
+
+    this.document.head.appendChild(style);
+  }
+
   _initControls() {
-    // TODO: Refactor
+    this._insertStyles();
     let controls = ['rewind', 'slower', 'faster'];
     const controller = document.createElement('div');
+    controller.classList.add('vidcontroller');
     const speedView = this.document.createElement('span');
     speedView.textContent = `${this.speed}x`;
     const controlsContainer = this.document.createElement('span');
 
     for (let control of controls) {
       const button = this.document.createElement('button');
+      button.classList.add('vidcontroller-btn');
       button.addEventListener('click', this[`_${control}`]);
       button.textContent = control;
       controlsContainer.appendChild(button);
