@@ -1,0 +1,20 @@
+{
+
+"manifest_version": 2,
+"name": "Video Controller",
+"version": "1.0",
+
+"description": "Controller for HTML 5 videos",
+
+"icons": {
+    "48": "icons/border-48.png"
+  },
+
+"content_scripts": [
+  {
+    "matches": ["*://*.mozilla.org/*"],
+    "js": ["videocontroller.js"]
+  }
+]
+
+}
