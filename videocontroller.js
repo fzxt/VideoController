@@ -89,7 +89,7 @@ class VideoController {
   _initControls() {
     this._insertStyles();
     let controls = ['rewind', 'slower', 'faster'];
-    const controller = document.createElement('div');
+    const controller = this.document.createElement('div');
 
     const resetInteractions = (e) => {
       e.preventDefault();
@@ -135,4 +135,8 @@ const init = (document) => {
   }
 };
 
-window.onload = () => init(document);
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = VideoController;
+} else {
+  window.onload = () => init(document);
+}
