@@ -5,17 +5,16 @@ import { trigger } from './utils';
 
 const { JSDOM } = jsdom;
 
-const dom = new JSDOM(`
-  <!DOCTYPE html>
-  <body>
-    <video></video>
-  </body>
-`);
-
 // video element and VideoController
-let target, vc;
+let target, vc, dom;
 
 test.beforeEach(t => {
+  dom = new JSDOM(`
+      <!DOCTYPE html>
+    <body>
+      <video></video>
+    </body>
+  `);
   target = dom.window.document.getElementsByTagName("video")[0];
   vc = new VideoController(target, target.parentNode);
 });
@@ -36,4 +35,22 @@ test('video controller is visible on hover for video element', t => {
 test('video controller is hidden on mouse exit for video element', t => {
   trigger(dom, target, 'mouseexit');
   t.is(vc.controllerView.style.visibility, 'hidden');
+});
+
+test('rewind: rewinds time by 10s', t => {
+  const currentTime = target.currentTime;
+  vc._rewind();
+  t.is(target.currentTime, currentTime - 10);
+});
+
+test('faster: speeds up playback by 0.1', t => {
+ const playbackRate = target.playbackRate;
+ vc._faster();
+ t.is(target.playbackRate, playbackRate + 0.1);
+});
+
+test('slower: slows down playback by 0.1', t => {
+  const playbackRate = target.playbackRate;
+  vc._slower();
+  t.is(target.playbackRate, playbackRate - 0.1);
 });
