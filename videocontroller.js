@@ -11,10 +11,22 @@ class VideoController {
     this._insertStyles = this._insertStyles.bind(this);
     this._rewind = this._rewind.bind(this);
     this._faster = this._faster.bind(this);
+    this._showControls = this._showControls.bind(this);
     this._slower = this._slower.bind(this);
 
-    target.addEventListener('play', _ => this._setPlaybackRate());
     this._initControls();
+    target.addEventListener('play', _ => this._setPlaybackRate());
+    // Display on hover for video element
+    target.addEventListener('mouseenter', _ => this._showControls());
+    target.addEventListener('mouseout', _ => this._hideControls());
+  }
+
+  _showControls() {
+    this.controllerView.style.visibility = 'visible';
+  }
+
+  _hideControls() {
+    this.controllerView.style.visibility = 'hidden';
   }
 
   _setSpeed(speed) {
@@ -56,7 +68,12 @@ class VideoController {
         margin: 10px 10px 10px 15px;
         cursor: default;
         z-index: 9999999;
-        opacity: 0.3;
+        opacity: 0.7;
+        transition: 300ms all;
+      }
+
+      .vidcontroller:hover {
+        opacity: 1;
       }
 
       .vidcontroller-btn {
@@ -73,7 +90,19 @@ class VideoController {
     this._insertStyles();
     let controls = ['rewind', 'slower', 'faster'];
     const controller = document.createElement('div');
+
+    const resetInteractions = (e) => {
+      e.preventDefault();
+      this._showControls();
+    };
+
+    controller.addEventListener('mouseover', resetInteractions);
+    controller.addEventListener('mouseenter', resetInteractions);
+    controller.addEventListener('mouseclick', resetInteractions);
+
     controller.classList.add('vidcontroller');
+    // Hide initially
+    controller.style.visibility = 'hidden';
     const speedView = this.document.createElement('span');
     speedView.textContent = `${this.speed}x`;
     const controlsContainer = this.document.createElement('span');
@@ -89,6 +118,7 @@ class VideoController {
     controller.appendChild(speedView);
     controller.appendChild(controlsContainer);
     this.speedView = speedView;
+    this.controllerView = controller;
     this.parent.insertBefore(controller, this.parent.firstChild);
   }
 }
