@@ -135,8 +135,10 @@ const init = (document) => {
   }
 };
 
+// For testing
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = VideoController;
 } else {
+  // Entry point in the browser
   window.onload = () => init(document);
 }

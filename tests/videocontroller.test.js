@@ -24,33 +24,33 @@ test('can initialize video controller', t => {
 });
 
 test('video controller is hidden initially on video element', t => {
-  t.is(vc.controllerView.style.visibility, 'hidden');
+  t.is('hidden', vc.controllerView.style.visibility);
 });
 
 test('video controller is visible on hover for video element', t => {
   trigger(dom, target, 'mouseenter');
-  t.is(vc.controllerView.style.visibility, 'visible');
+  t.is('visible', vc.controllerView.style.visibility);
 });
 
 test('video controller is hidden on mouse exit for video element', t => {
   trigger(dom, target, 'mouseexit');
-  t.is(vc.controllerView.style.visibility, 'hidden');
+  t.is('hidden', vc.controllerView.style.visibility, );
 });
 
 test('rewind: rewinds time by 10s', t => {
   const currentTime = target.currentTime;
   vc._rewind();
-  t.is(target.currentTime, currentTime - 10);
+  t.is(currentTime - 10, target.currentTime);
 });
 
 test('faster: speeds up playback by 0.1', t => {
  const playbackRate = target.playbackRate;
  vc._faster();
- t.is(target.playbackRate, playbackRate + 0.1);
+  t.is(playbackRate + 0.1, target.playbackRate);
 });
 
 test('slower: slows down playback by 0.1', t => {
   const playbackRate = target.playbackRate;
   vc._slower();
-  t.is(target.playbackRate, playbackRate - 0.1);
+  t.is(playbackRate - 0.1, target.playbackRate);
 });
