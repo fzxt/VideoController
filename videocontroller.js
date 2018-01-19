@@ -4,10 +4,13 @@ class VideoController {
     this.parent = target.parentNode || parent;
     this.speed = 1.0;
     this.document = target.ownerDocument;
+    this._dragStartPos = [];
 
     this._initControls = this._initControls.bind(this);
     this._setSpeed = this._setSpeed.bind(this);
     this._updateSpeed = this._updateSpeed.bind(this);
+    this._dragStart = this._dragStart.bind(this);
+    this._dragEnd = this._dragEnd.bind(this);
     this._insertStyles = this._insertStyles.bind(this);
     this._rewind = this._rewind.bind(this);
     this._faster = this._faster.bind(this);
@@ -16,7 +19,6 @@ class VideoController {
 
     this._initControls();
     target.addEventListener('play', _ => this._setPlaybackRate());
-    // Display on hover for video element
     target.addEventListener('mouseenter', _ => this._showControls());
     target.addEventListener('mouseout', _ => this._hideControls());
   }
@@ -86,6 +88,27 @@ class VideoController {
     this.document.head.appendChild(style);
   }
 
+  _dragStart(ev) {
+    this._dragStartPos = [ev.screenX, ev.screenY];
+    // TODO: Fix this, add a better, generated id
+    ev.dataTransfer.setData('text/plain', ev.target.id);
+  }
+
+  _dragEnd(el, ev) {
+    let style = this.document.defaultView.getComputedStyle(el, null);
+    let endPos = [ev.screenX, ev.screenY];
+    const topPixels = Number(style.top.replace('px', ''));
+    const leftPixels = Number(style.left.replace('px', ''));
+    const newTop = topPixels + (endPos[1] - this._dragStartPos[1]);
+    const newLeft = leftPixels + (endPos[0] - this._dragStartPos[0]);
+    const validTop = newTop > 0 && newTop <= this.target.height;
+    const validLeft = newLeft > 0 && newLeft <= this.target.width;
+    if (validTop && validLeft) {
+      el.style.top =  newTop + 'px';
+      el.style.left = newLeft + 'px';
+    }
+  }
+
   _initControls() {
     this._insertStyles();
     let controls = ['rewind', 'slower', 'faster'];
@@ -103,6 +126,9 @@ class VideoController {
     controller.classList.add('vidcontroller');
     // Hide initially
     controller.style.visibility = 'hidden';
+    controller.setAttribute('draggable', true);
+    controller.ondragstart = this._dragStart;
+    controller.ondragend = (e) => { this._dragEnd(controller, e); };
     const speedView = this.document.createElement('span');
     speedView.textContent = `${this.speed}x`;
     const controlsContainer = this.document.createElement('span');
