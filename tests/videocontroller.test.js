@@ -34,7 +34,12 @@ test('video controller is visible on hover for video element', t => {
 
 test('video controller is hidden on mouse exit for video element', t => {
   trigger(dom, target, 'mouseexit');
-  t.is('hidden', vc.controllerView.style.visibility, );
+  t.is('hidden', vc.controllerView.style.visibility);
+});
+
+test('videocontroller has draggable attribute', t => {
+  const draggable = vc.controllerView.getAttribute('draggable');
+  t.is('true', draggable);
 });
 
 test('rewind: rewinds time by 10s', t => {
