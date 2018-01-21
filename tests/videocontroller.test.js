@@ -10,7 +10,7 @@ let target, vc, dom;
 
 test.beforeEach(t => {
   dom = new JSDOM(`
-      <!DOCTYPE html>
+    <!DOCTYPE html>
     <body>
       <video></video>
     </body>
@@ -44,8 +44,8 @@ test('rewind: rewinds time by 10s', t => {
 });
 
 test('faster: speeds up playback by 0.1', t => {
- const playbackRate = target.playbackRate;
- vc._faster();
+  const playbackRate = target.playbackRate;
+  vc._faster();
   t.is(playbackRate + 0.1, target.playbackRate);
 });
 
