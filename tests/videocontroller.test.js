@@ -27,6 +27,11 @@ test('video controller is hidden initially on video element', t => {
   t.is('hidden', vc.controllerView.style.visibility);
 });
 
+test('video controller displays current speed', t => {
+  let speedView = vc.speedView;
+  t.is(speedView.textContent, '1.0x');
+});
+
 test('video controller is visible on hover for video element', t => {
   trigger(dom, target, 'mouseenter');
   t.is('visible', vc.controllerView.style.visibility);

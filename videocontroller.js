@@ -130,7 +130,7 @@ class VideoController {
     controller.ondragstart = this._dragStart;
     controller.ondragend = (e) => { this._dragEnd(controller, e); };
     const speedView = this.document.createElement('span');
-    speedView.textContent = `${this.speed}x`;
+    speedView.textContent = `${this.speed.toFixed(1)}x`;
     const controlsContainer = this.document.createElement('span');
 
     for (let control of controls) {
