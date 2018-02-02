@@ -1,3 +1,5 @@
+'use strict';
+
 class VideoController {
   constructor(target, parent) {
     this.target = target;

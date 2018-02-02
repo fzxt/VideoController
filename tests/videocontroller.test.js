@@ -1,3 +1,5 @@
+'use strict';
+
 import test from 'ava';
 import jsdom from 'jsdom';
 import VideoController from '../videocontroller';
