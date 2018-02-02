@@ -36,8 +36,8 @@ class VideoController {
     this.speedView.textContent = `${this.speed.toFixed(1)}x`;
   }
 
-  _setPlaybackRate(rate) {
-    this.target.playbackRate = rate;
+  _setPlaybackRate(rate = 1.0) {
+    this.target.playbackRate = rate.toFixed(1);
   }
 
   _updateSpeed(speed) {
