@@ -20,8 +20,11 @@ class VideoController {
     this._slower = this._slower.bind(this);
 
     this._initControls();
+    // eslint-disable-next-line no-unused-vars
     target.addEventListener('play', _ => this._setPlaybackRate());
+    // eslint-disable-next-line no-unused-vars
     target.addEventListener('mouseenter', _ => this._showControls());
+    // eslint-disable-next-line no-unused-vars
     target.addEventListener('mouseout', _ => this._hideControls());
   }
 
@@ -198,7 +201,8 @@ const init = (document) => {
   }
 };
 
-// For testing
+// Export as module for testing
+/* eslint-disable */
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = VideoController;
 } else {

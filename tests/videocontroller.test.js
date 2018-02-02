@@ -10,6 +10,7 @@ const { JSDOM } = jsdom;
 // video element and VideoController
 let target, vc, dom;
 
+// eslint-disable-next-line no-unused-vars
 test.beforeEach(t => {
   dom = new JSDOM(`
     <!DOCTYPE html>
@@ -17,7 +18,7 @@ test.beforeEach(t => {
       <video></video>
     </body>
   `);
-  target = dom.window.document.getElementsByTagName("video")[0];
+  target = dom.window.document.getElementsByTagName('video')[0];
   vc = new VideoController(target, target.parentNode);
 });
 

@@ -6,6 +6,7 @@ function trigger(dom, el, ev) {
   el.dispatchEvent(e);
 }
 
+/* eslint-disable */
 module.exports = {
   trigger
 };
