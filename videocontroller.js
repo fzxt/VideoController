@@ -71,7 +71,7 @@ class VideoController {
         cursor: default;
         z-index: 9999999;
         opacity: 0.7;
-        transition: 300ms all;
+        transition: opacity 300ms;
       }
 
       .speed-text {
