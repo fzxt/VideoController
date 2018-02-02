@@ -74,6 +74,15 @@ class VideoController {
         transition: 300ms all;
       }
 
+      .speed-text {
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
       .vidcontroller:hover {
         opacity: 1;
       }
@@ -129,8 +138,11 @@ class VideoController {
     controller.setAttribute('draggable', true);
     controller.ondragstart = this._dragStart;
     controller.ondragend = (e) => { this._dragEnd(controller, e); };
+
     const speedView = this.document.createElement('span');
     speedView.textContent = `${this.speed.toFixed(1)}x`;
+    speedView.classList.add('speed-text');
+
     const controlsContainer = this.document.createElement('span');
 
     for (let control of controls) {
