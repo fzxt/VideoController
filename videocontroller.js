@@ -106,15 +106,38 @@ class VideoController {
   _dragEnd(el, ev) {
     let style = this.document.defaultView.getComputedStyle(el, null);
     let endPos = [ev.screenX, ev.screenY];
+
     const topPixels = Number(style.top.replace('px', ''));
     const leftPixels = Number(style.left.replace('px', ''));
+
     const newTop = topPixels + (endPos[1] - this._dragStartPos[1]);
     const newLeft = leftPixels + (endPos[0] - this._dragStartPos[0]);
-    const validTop = newTop > 0 && newTop <= this.target.height;
-    const validLeft = newLeft > 0 && newLeft <= this.target.width;
+
+    const heightBound = this.parent.offsetHeight - el.offsetHeight;
+    const widthBound = this.parent.offsetWidth - el.offsetWidth;
+
+    const validTop = newTop > 0 && newTop <= heightBound;
+    const validLeft = newLeft > 0 && newLeft <= widthBound;
+
     if (validTop && validLeft) {
-      el.style.top =  newTop + 'px';
+      el.style.top = newTop + 'px';
       el.style.left = newLeft + 'px';
+    }
+
+    if (newTop < 0) {
+      el.style.top = 0 + 'px';
+    }
+
+    if (newLeft < 0) {
+      el.style.left = 0 + 'px';
+    }
+
+    if (newTop >= heightBound) {
+      el.style.top = heightBound + 'px';
+    }
+
+    if (newLeft >= widthBound) {
+      el.style.left = widthBound + 'px';
     }
   }
 
